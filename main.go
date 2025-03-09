@@ -3,7 +3,6 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/gin-gonic/gin"
 	"goAPI/src"
 	"goAPI/src/adapters"
 	"goAPI/src/db/handlers"
@@ -32,8 +31,6 @@ type S2 struct {
 }
 
 func mainOld() {
-	router := gin.Default()
-	router.GET("/albums", src.GetAlbums)
 	dsn := "host=localhost user=postgres password=password dbname=thingyDB port=5432 sslmode=disable TimeZone=Asia/Shanghai"
 	dbConn, _ := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
