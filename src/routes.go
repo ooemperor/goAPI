@@ -13,6 +13,8 @@ func InitRouter() *gin.Engine {
 
 	ApiRouter.DELETE("user/", api.UserApiObject.DeleteAll)
 	ApiRouter.DELETE("user/:id", api.UserApiObject.DELETE)
+	
+	ApiRouter.POST("user/", api.UserApiObject.POST)
 
 	return ApiRouter
 }

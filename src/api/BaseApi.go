@@ -3,6 +3,7 @@ package api
 import (
 	"github.com/gin-gonic/gin"
 	"goAPI/src/adapters"
+	"io"
 	"net/http"
 	"strconv"
 )
@@ -35,6 +36,20 @@ func (b BaseApi) DeleteAll(ctx *gin.Context) {
 
 func (b BaseApi) GetAll(ctx *gin.Context) {
 	ctx.IndentedJSON(http.StatusOK, b.adapter.GetAll())
+}
+
+/*
+POST creates a new object in the backend
+*/
+func (b BaseApi) POST(ctx *gin.Context) {
+	jsonData, err := io.ReadAll(ctx.Request.Body)
+	if err != nil {
+		ctx.IndentedJSON(http.StatusBadRequest, nil)
+		return
+	} else {
+		ctx.IndentedJSON(http.StatusCreated, b.adapter.Post(jsonData))
+		return
+	}
 }
 
 func newBaseApi(adapter adapters.IBaseAdapter) BaseApi {

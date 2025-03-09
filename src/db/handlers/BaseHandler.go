@@ -1,6 +1,9 @@
 package handlers
 
 import (
+	"bytes"
+	"encoding/json"
+	"goAPI/src/db/models"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -10,6 +13,7 @@ type IBaseHandler interface {
 	Get(id uint) any
 	DeleteAll() *gorm.DB
 	Delete(id uint) *gorm.DB
+	Post(values []byte) any
 }
 
 type BaseHandler struct {
@@ -41,6 +45,14 @@ Delete Function to delete a single instance out of the database
 */
 func (b BaseHandler) Delete(id uint) *gorm.DB {
 	results := b.Connection.Delete(&b.objects, id)
+	return results
+}
+
+func (b BaseHandler) Post(values []byte) any {
+	user := models.User{}
+	json.NewDecoder(bytes.NewBuffer(values)).Decode(&user)
+	b.Connection.Table("users")
+	results := b.Connection.Create(&user)
 	return results
 }
 

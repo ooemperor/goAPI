@@ -9,6 +9,7 @@ type IBaseAdapter interface {
 	Get(id uint) any
 	DeleteAll() any
 	Delete(id uint) any
+	Post(values []byte) any
 }
 
 type BaseAdapter struct {
@@ -30,6 +31,10 @@ func (b BaseAdapter) DeleteAll() any {
 
 func (b BaseAdapter) Delete(id uint) any {
 	return b.handler.Delete(id)
+}
+
+func (b BaseAdapter) Post(values []byte) any {
+	return b.handler.Post(values)
 }
 
 func NewBaseAdapter(handler handlers.IBaseHandler) BaseAdapter {
